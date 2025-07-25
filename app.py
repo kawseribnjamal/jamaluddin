@@ -8,7 +8,7 @@ conversion_history = []
 
 # ফিক্সড ইউজার
 USERNAME = "admin"
-PASSWORD = "mypassword"
+PASSWORD = "123456"
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
