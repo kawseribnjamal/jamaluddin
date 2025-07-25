@@ -3,19 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>জমির শতক ও রূপান্তর হিসাব</title>
+  <title>খতিয়ানের জমির শতক হিসাব</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gradient-to-r from-blue-50 to-gray-100 min-h-screen flex flex-col">
 
   <div class="container mx-auto px-4 py-8 flex-grow max-w-lg">
 
-    <h1 class="text-3xl font-extrabold text-center mb-8 text-blue-800">জমির শতক ও রূপান্তর হিসাব</h1>
+    <h1 class="text-3xl font-extrabold text-center mb-8 text-blue-800">খতিয়ানের জমির শতক হিসাব</h1>
 
     <form method="post" class="bg-white p-6 rounded-xl shadow-lg space-y-6">
 
       <div>
-        <label for="totalShotok" class="block text-lg font-semibold mb-1">মোট শতক লিখুন</label>
+        <label for="totalShotok" class="block text-lg font-semibold mb-1">খতিয়ানের মোট জমি (শতক হিসেবে)</label>
         <input
           type="number"
           step="0.01"
@@ -52,9 +52,26 @@
           required
           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          {% for i in range(0, 20) %}
-          <option value="{{ i }}">{{ i }} গণ্ডা</option>
-          {% endfor %}
+          <option value="0">০</option>
+          <option value="1">১ গণ্ডা</option>
+          <option value="2">২ গণ্ডা</option>
+          <option value="3">৩ গণ্ডা</option>
+          <option value="4">৪ গণ্ডা</option>
+          <option value="5">৫ গণ্ডা</option>
+          <option value="6">৬ গণ্ডা</option>
+          <option value="7">৭ গণ্ডা</option>
+          <option value="8">৮ গণ্ডা</option>
+          <option value="9">৯ গণ্ডা</option>
+          <option value="10">১০ গণ্ডা</option>
+          <option value="11">১১ গণ্ডা</option>
+          <option value="12">১২ গণ্ডা</option>
+          <option value="13">১৩ গণ্ডা</option>
+          <option value="14">১৪ গণ্ডা</option>
+          <option value="15">১৫ গণ্ডা</option>
+          <option value="16">১৬ গণ্ডা</option>
+          <option value="17">১৭ গণ্ডা</option>
+          <option value="18">১৮ গণ্ডা</option>
+          <option value="19">১৯ গণ্ডা</option>
         </select>
       </div>
 
@@ -92,9 +109,26 @@
           required
           class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         >
-          {% for i in range(0, 20) %}
-          <option value="{{ i }}">{{ i }} তিল</option>
-          {% endfor %}
+          <option value="0">০</option>
+          <option value="1">১ তিল</option>
+          <option value="2">২ তিল</option>
+          <option value="3">৩ তিল</option>
+          <option value="4">৪ তিল</option>
+          <option value="5">৫ তিল</option>
+          <option value="6">৬ তিল</option>
+          <option value="7">৭ তিল</option>
+          <option value="8">৮ তিল</option>
+          <option value="9">৯ তিল</option>
+          <option value="10">১০ তিল</option>
+          <option value="11">১১ তিল</option>
+          <option value="12">১২ তিল</option>
+          <option value="13">১৩ তিল</option>
+          <option value="14">১৪ তিল</option>
+          <option value="15">১৫ তিল</option>
+          <option value="16">১৬ তিল</option>
+          <option value="17">১৭ তিল</option>
+          <option value="18">১৮ তিল</option>
+          <option value="19">১৯ তিল</option>
         </select>
       </div>
 
@@ -109,7 +143,7 @@
 
     {% if result1 %}
     <div class="result mt-8 p-6 bg-white rounded-xl shadow-md text-center text-lg text-blue-900 font-semibold">
-      📏 <span>আপনার অংশ: </span><span class="text-2xl">{{ result1 }} শতক</span>
+      <span class="text-2xl"> আপনার অংশ:{{ result1 }} শতক</span>
     </div>
     {% endif %}
 
@@ -120,20 +154,19 @@
         <strong>গণ্ডা:</strong> {{ result2.gonda }} &nbsp;|&nbsp;
         <strong>কড়া:</strong> {{ result2.kora }} &nbsp;|&nbsp;
         <strong>ক্রান্তি:</strong> {{ result2.kranti }} &nbsp;|&nbsp;
-        <strong>তিল:</strong> {{ result2.til }}
+        <strong>তিল:</strong> {{ result2.til }} &nbsp;|&nbsp;
+        <strong>অতিরিক্ত:</strong> {{ result2.extra_sqft }} বর্গফুট
       </p>
-      <p class="text-lg">
-        <strong>অতিরিক্ত স্কয়ারফুট:</strong> {{ result2.extra_sqft }} বর্গফুট
-      </p>
+     
       <p class="text-lg font-semibold mt-2">
-        মোট স্কয়ারফুট: {{ result2.total_sqft }}
+        মোট: {{ result2.total_sqft }} স্কয়ারফুট
       </p>
     </div>
     {% endif %}
 
     {% if history and history|length > 0 %}
     <section class="mt-10 bg-white p-6 rounded-xl shadow-md">
-      <h2 class="text-2xl font-bold mb-4 text-center text-blue-700">কনভার্সনের ইতিহাস</h2>
+      <h2 class="text-2xl font-bold mb-4 text-center text-blue-700"> ইতিহাস</h2>
       <table class="w-full text-left border-collapse">
         <thead>
           <tr class="bg-blue-100">
