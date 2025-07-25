@@ -78,6 +78,11 @@ def index():
             result1 = "ত্রুটি: " + str(e)
 
     return render_template("index.html", result1=result1, result2=result2, history=conversion_history)
+    
+    @app.route('/clear_history', methods=['POST'])
+def clear_history():
+    conversion_history.clear()
+    return render_template("index.html", result1=None, result2=None, history=conversion_history)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
