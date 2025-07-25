@@ -65,8 +65,8 @@ def index():
                 'kora': kora if kora > 0 else 0,
                 'kranti': kranti if kranti > 0 else 0,
                 'til': til if til > 0 else 0,
-                'total_shotok': result1,
-                'total_sqft': result2['total_sqft']
+                'total_shotok': round(result1, 2),
+                'total_sqft': round(result2['total_sqft'], 2)
             })
 
 
