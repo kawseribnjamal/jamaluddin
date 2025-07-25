@@ -1,36 +1,12 @@
-from flask import Flask, render_template, request, redirect, session, url_for
+from flask import Flask, render_template, request
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'f3b9a8d4c7e1f0b29a6d4e3c5b7f2a18'  # খুব গুরুত্বপূর্ণ! এটা strong রাখতে হবে
 
 conversion_history = []
 
-# ফিক্সড ইউজার
-USERNAME = "admin"
-PASSWORD = "123456"
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] == USERNAME and request.form['password'] == PASSWORD:
-            session['logged_in'] = True
-            return redirect(url_for('index'))
-        else:
-            error = "ইউজারনেম বা পাসওয়ার্ড ভুল!"
-    return render_template('login.html', error=error)
-
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    return redirect(url_for('login'))
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-
     result1 = None
     result2 = None
 
@@ -53,7 +29,7 @@ def index():
             user_til = (ana * til_per_ana) + (gonda * til_per_gonda) + (kora * til_per_kora) + (kranti * til_per_kranti) + til
             factor = total_shotok / full_land_til
             user_shotok = user_til * factor
-            result1 = round(user_shotok, 2)
+            result1 = round(user_shotok, 3)
 
             sqft_per_shotok = 435.6
             gonda_sqft = 864
@@ -93,6 +69,8 @@ def index():
                 'total_sqft': round(result2['total_sqft'], 2)
             })
 
+
+            # ইতিহাস সর্বশেষ ১০টি রাখো
             if len(conversion_history) > 10:
                 conversion_history.pop(0)
 
