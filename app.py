@@ -60,10 +60,15 @@ def index():
 
             # ইতিহাসে যোগ
             conversion_history.append({
-                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'ana': ana if ana > 0 else 0,
+                'gonda': gonda if gonda > 0 else 0,
+                'kora': kora if kora > 0 else 0,
+                'kranti': kranti if kranti > 0 else 0,
+                'til': til if til > 0 else 0,
                 'total_shotok': result1,
                 'total_sqft': result2['total_sqft']
             })
+
 
             # ইতিহাস সর্বশেষ ১০টি রাখো
             if len(conversion_history) > 10:
