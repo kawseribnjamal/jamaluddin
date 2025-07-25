@@ -1,0 +1,14 @@
+name: Keep Render App Alive
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'  # প্রতি ১০ মিনিটে চলবে
+  workflow_dispatch:         # চাইলে ম্যানুয়ালি চালাতে পারো
+
+jobs:
+  ping-render:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Curl Ping to Render App
+        run: curl -m 10 -s https://jamaluddin.onrender.com/ || echo "Ping failed"
