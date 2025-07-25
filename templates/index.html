@@ -209,6 +209,13 @@
       {% endfor %}
     </tbody>
   </table>
+
+  {% if history and history|length > 0 %}
+  <form method="post" action="/clear_history" class="text-right mb-3">
+    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded">
+      ইতিহাস মুছুন
+    </button>
+  </form>
 </section>
 {% endif %}
 
