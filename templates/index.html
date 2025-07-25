@@ -2,59 +2,136 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>জমি পরিমাপ কনভার্টার</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ভূমি পরিমাপক</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'SolaimanLipi', sans-serif; max-width: 800px; margin: auto; padding: 20px; }
-        input, button { padding: 8px; margin: 5px 0; width: 100%; }
-        hr { margin: 20px 0; }
+        body {
+            font-family: 'Hind Siliguri', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.08);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+        }
+        select, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .history {
+            background-color: #ffffff;
+            border: 2px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        .history h3 {
+            margin-top: 0;
+        }
+        @media(max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            select, button {
+                font-size: 15px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>জমি পরিমাপ কনভার্টার</h1>
-    <form method="POST">
-        <label>মোট শতক:</label>
-        <input type="number" name="totalShotok" step="0.01" required>
-        <label>আনা:</label>
-        <input type="number" name="ana" value="0" required>
-        <label>গণ্ডা:</label>
-        <input type="number" name="gonda" value="0" required>
-        <label>কড়া:</label>
-        <input type="number" name="kora" value="0" required>
-        <label>ক্রান্তি:</label>
-        <input type="number" name="kranti" value="0" required>
-        <label>তিল:</label>
-        <input type="number" name="til" value="0" required>
-        <button type="submit">হিসাব করুন</button>
-    </form>
+    <div class="container">
 
-    {% if result1 %}
-    <hr>
-    <h2>ফলাফল:</h2>
-    <p><strong>মোট শতক:</strong> {{ result1 }}</p>
-    <p><strong>মোট বর্গফুট:</strong> {{ result2.total_sqft }}</p>
-    <p>
-        {{ result2.gonda }} গণ্ডা, {{ result2.kora }} কড়া, {{ result2.kranti }} ক্রান্তি,
-        {{ result2.til }} তিল + {{ result2.extra_sqft }} বর্গফুট
-    </p>
-    {% endif %}
+        <!-- Input Form -->
+        {% if not result %}
+        <div class="card">
+            <h2>ভূমির একক রূপান্তর</h2>
+            <form method="POST">
 
-    {% if history %}
-    <hr>
-    <h3>পূর্বের হিসাব (সর্বশেষ {{ history|length }}টি):</h3>
-    <ul>
-        {% for record in history %}
-        <li style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
-            <strong>ইনপুট:</strong>
-            {{ record.input.totalShotok }} শতক, {{ record.input.ana }} আনা,
-            {{ record.input.gonda }} গণ্ডা, {{ record.input.kora }} কড়া,
-            {{ record.input.kranti }} ক্রান্তি, {{ record.input.til }} তিল<br>
-            <strong>ফলাফল:</strong>
-            {{ record.output.result1 }} শতক — {{ record.output.result2.gonda }} গণ্ডা,
-            {{ record.output.result2.kora }} কড়া, {{ record.output.result2.kranti }} ক্রান্তি,
-            {{ record.output.result2.til }} তিল + {{ record.output.result2.extra_sqft }} বর্গফুট
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+                <label>আনা সিলেক্ট করুন:</label>
+                <select name="ana" required>
+                    {% for i in range(16) %}
+                    <option value="{{ i }}">{{ i }}</option>
+                    {% endfor %}
+                </select>
+
+                <label>গণ্ডা সিলেক্ট করুন:</label>
+                <select name="gonda" required>
+                    {% for i in range(20) %}
+                    <option value="{{ i }}">{{ i }} গণ্ডা</option>
+                    {% endfor %}
+                </select>
+
+                <label>কড়া সিলেক্ট করুন:</label>
+                <select name="kora" required>
+                    {% for i in range(4) %}
+                    <option value="{{ i }}">{{ i }} কড়া</option>
+                    {% endfor %}
+                </select>
+
+                <label>ক্রান্তি সিলেক্ট করুন:</label>
+                <select name="kranti" required>
+                    {% for i in range(3) %}
+                    <option value="{{ i }}">{{ i }} ক্রান্তি</option>
+                    {% endfor %}
+                </select>
+
+                <label>তিল সিলেক্ট করুন:</label>
+                <select name="til" required>
+                    {% for i in range(20) %}
+                    <option value="{{ i }}">{{ i }} তিল</option>
+                    {% endfor %}
+                </select>
+
+                <button type="submit">রূপান্তর করুন</button>
+            </form>
+        </div>
+        {% endif %}
+
+        <!-- History -->
+        {% if history %}
+        <div class="history">
+            <h3>রূপান্তরের হিস্টরি</h3>
+            <ul>
+                {% for item in history %}
+                <li>
+                    আনা: {{ item.ana }}, গণ্ডা: {{ item.gonda }}, কড়া: {{ item.kora }},
+                    ক্রান্তি: {{ item.kranti }}, তিল: {{ item.til }}<br>
+                    ➤ মোট শতক: <strong>{{ item.shotok }}</strong>,
+                    মোট বর্গফুট: <strong>{{ item.sqft }}</strong>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+    </div>
 </body>
 </html>
