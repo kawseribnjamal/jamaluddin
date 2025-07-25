@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <title>জমি পরিমাপ কনভার্টার</title>
+    <style>
+        body { font-family: 'SolaimanLipi', sans-serif; max-width: 800px; margin: auto; padding: 20px; }
+        input, button { padding: 8px; margin: 5px 0; width: 100%; }
+        hr { margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <h1>জমি পরিমাপ কনভার্টার</h1>
+    <form method="POST">
+        <label>মোট শতক:</label>
+        <input type="number" name="totalShotok" step="0.01" required>
+        <label>আনা:</label>
+        <input type="number" name="ana" value="0" required>
+        <label>গণ্ডা:</label>
+        <input type="number" name="gonda" value="0" required>
+        <label>কড়া:</label>
+        <input type="number" name="kora" value="0" required>
+        <label>ক্রান্তি:</label>
+        <input type="number" name="kranti" value="0" required>
+        <label>তিল:</label>
+        <input type="number" name="til" value="0" required>
+        <button type="submit">হিসাব করুন</button>
+    </form>
+
+    {% if result1 %}
+    <hr>
+    <h2>ফলাফল:</h2>
+    <p><strong>মোট শতক:</strong> {{ result1 }}</p>
+    <p><strong>মোট বর্গফুট:</strong> {{ result2.total_sqft }}</p>
+    <p>
+        {{ result2.gonda }} গণ্ডা, {{ result2.kora }} কড়া, {{ result2.kranti }} ক্রান্তি,
+        {{ result2.til }} তিল + {{ result2.extra_sqft }} বর্গফুট
+    </p>
+    {% endif %}
+
+    {% if history %}
+    <hr>
+    <h3>পূর্বের হিসাব (সর্বশেষ {{ history|length }}টি):</h3>
+    <ul>
+        {% for record in history %}
+        <li style="margin-bottom: 15px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">
+            <strong>ইনপুট:</strong>
+            {{ record.input.totalShotok }} শতক, {{ record.input.ana }} আনা,
+            {{ record.input.gonda }} গণ্ডা, {{ record.input.kora }} কড়া,
+            {{ record.input.kranti }} ক্রান্তি, {{ record.input.til }} তিল<br>
+            <strong>ফলাফল:</strong>
+            {{ record.output.result1 }} শতক — {{ record.output.result2.gonda }} গণ্ডা,
+            {{ record.output.result2.kora }} কড়া, {{ record.output.result2.kranti }} ক্রান্তি,
+            {{ record.output.result2.til }} তিল + {{ record.output.result2.extra_sqft }} বর্গফুট
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>
