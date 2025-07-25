@@ -1,16 +1,12 @@
-from flask import Flask, render_template, request, session
-from collections import deque
+from flask import Flask, render_template, request
+from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'  # যেকোনো র‍্যান্ডম সিক্রেট কী দিন
 
-MAX_HISTORY = 10
+conversion_history = []
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if 'history' not in session:
-        session['history'] = []
-
     result1 = None
     result2 = None
 
@@ -23,7 +19,7 @@ def index():
             kranti = int(request.form['kranti'])
             til = int(request.form['til'])
 
-            # হিসাবের অংশ
+            # হিসাব
             til_per_ana = 4800
             til_per_gonda = 240
             til_per_kora = 60
@@ -51,43 +47,32 @@ def index():
             kr = int(remainder // kranti_sqft)
             remainder %= kranti_sqft
             t = int(remainder // til_sqft)
-            remainder %= til_sqft
+            remainder = round(remainder % til_sqft, 2)
 
             result2 = {
                 'gonda': g,
                 'kora': k,
                 'kranti': kr,
                 'til': t,
-                'extra_sqft': round(remainder, 2),
+                'extra_sqft': remainder,
                 'total_sqft': round(total_sqft, 2)
             }
 
-            # হিস্টরিতে যোগ করা
-            new_record = {
-                'input': {
-                    'totalShotok': total_shotok,
-                    'ana': ana,
-                    'gonda': gonda,
-                    'kora': kora,
-                    'kranti': kranti,
-                    'til': til,
-                },
-                'output': {
-                    'result1': result1,
-                    'result2': result2
-                }
-            }
+            # ইতিহাসে যোগ
+            conversion_history.append({
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'total_shotok': result1,
+                'total_sqft': result2['total_sqft']
+            })
 
-            history = session['history']
-            history.insert(0, new_record)
-            if len(history) > MAX_HISTORY:
-                history = history[:MAX_HISTORY]
-            session['history'] = history
+            # ইতিহাস সর্বশেষ ১০টি রাখো
+            if len(conversion_history) > 10:
+                conversion_history.pop(0)
 
         except Exception as e:
-            result1 = f"ত্রুটি হয়েছে: {e}"
+            result1 = "ত্রুটি: " + str(e)
 
-    return render_template("index.html", result1=result1, result2=result2, history=session.get('history', []))
+    return render_template("index.html", result1=result1, result2=result2, history=conversion_history)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
