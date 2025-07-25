@@ -162,31 +162,54 @@
         মোট: {{ result2.total_sqft }} স্কয়ারফুট
       </p>
     </div>
-    {% endif %}
+  {% endif %}
 
-    {% if history and history|length > 0 %}
-    <section class="mt-10 bg-white p-6 rounded-xl shadow-md">
-      <h2 class="text-2xl font-bold mb-4 text-center text-blue-700"> ইতিহাস</h2>
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="bg-blue-100">
-            <th class="border px-3 py-2">তারিখ ও সময়</th>
-            <th class="border px-3 py-2">মোট শতক</th>
-            <th class="border px-3 py-2">মোট স্কয়ারফুট</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for entry in history %}
-          <tr class="odd:bg-gray-50">
-            <td class="border px-3 py-2">{{ entry.timestamp }}</td>
-            <td class="border px-3 py-2">{{ entry.total_shotok }}</td>
-            <td class="border px-3 py-2">{{ entry.total_sqft }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </section>
-    {% endif %}
+{% if history and history|length > 0 %}
+<section class="mt-10 bg-white p-6 rounded-xl shadow-md">
+  <h2 class="text-2xl font-bold mb-4 text-center text-blue-700">ইতিহাস</h2>
+  <table class="w-full text-left border-collapse">
+    <thead>
+      <tr class="bg-blue-100">
+        <th class="border px-3 py-2">অংশ </th>
+        <th class="border px-3 py-2">মোট শতক</th>
+        <th class="border px-3 py-2">মোট স্কয়ারফুট</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in history %}
+      {% set symbols = {
+        'ana': ['/', '৵', '৶', '৷', '⩗', '৷৵', '৷৶', '৷৷', '৷⩗', '৷৷৵', '৷৷৶', '৸', '৸/', '৸৵', '৸৶'],
+        'gonda': ['১','২','৩','৪','৫','৬','৭','৮','৯','১০','১১','১২','১৩','১৪','১৫','১৬','১৭','১৮','১৯'],
+        'kora': ['৷','৷৷','৸'],
+        'kranti': ['৴','৴৴'],
+        'til': ['১','২','৩','৪','৫','৬','৭','৮','৯','১০','১১','১২','১৩','১৪','১৫','১৬','১৭','১৮','১৯']
+      } %}
+      <tr class="odd:bg-gray-50">
+        <td class="border px-3 py-2">
+          {% if entry.ana and entry.ana > 0 %}
+            <span class="mr-1"> {{ symbols['ana'][entry.ana - 1] }}</span>
+          {% endif %}
+          {% if entry.gonda and entry.gonda > 0 %}
+            <span class="mr-1"> {{ symbols['gonda'][entry.gonda - 1] }}</span>
+          {% endif %}
+          {% if entry.kora and entry.kora > 0 %}
+            <span class="mr-1"> {{ symbols['kora'][entry.kora - 1] }}</span>
+          {% endif %}
+          {% if entry.kranti and entry.kranti > 0 %}
+            <span class="mr-1"> {{ symbols['kranti'][entry.kranti - 1] }}</span>
+          {% endif %}
+          {% if entry.til and entry.til > 0 %}
+            <span class="mr-1"> {{ symbols['til'][entry.til - 1] }}</span>
+          {% endif %}
+        </td>
+        <td class="border px-3 py-2">{{ entry.total_shotok }}</td>
+        <td class="border px-3 py-2">{{ entry.total_sqft }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endif %}
 
   </div>
 
