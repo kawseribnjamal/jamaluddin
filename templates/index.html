@@ -9,10 +9,6 @@
 <body class="bg-gradient-to-r from-blue-50 to-gray-100 min-h-screen flex flex-col">
 
   <div class="container mx-auto px-4 py-8 flex-grow max-w-lg">
-    <!-- Logout Button -->
-<div class="w-full flex justify-end mb-4">
-  <a href="/logout" class="text-red-600 font-semibold hover:underline">লগআউট</a>
-</div>
 
     <h1 class="text-3xl font-extrabold text-center mb-8 text-blue-800">খতিয়ানের জমির শতক হিসাব</h1>
 
@@ -162,8 +158,8 @@
         <strong>{{ result2.extra_sqft }}</strong> বর্গফুট
       </p>
      
-      <p class="text-2xl font-semibold mt-2">
-        মোট: {{ result2.total_sqft }} স্কয়ারফুট
+      <p class="text-xl font-semibold mt-2">
+        মোট: <strong>{{ result2.total_sqft }} </strong>বর্গফুট
       </p>
 
     </div>
@@ -177,7 +173,7 @@
       <tr class="bg-blue-100">
         <th class="border px-3 py-2">অংশ </th>
         <th class="border px-3 py-2">মোট শতক</th>
-        <th class="border px-3 py-2">মোট স্কয়ারফুট</th>
+        <th class="border px-3 py-2">মোট বর্গফুট</th>
       </tr>
     </thead>
     <tbody>
