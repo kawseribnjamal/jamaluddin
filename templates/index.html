@@ -142,8 +142,8 @@
     </form>
 
     {% if result1 %}
-    <div class="result mt-8 p-6 bg-white rounded-xl shadow-md text-center text-lg text-blue-900 font-semibold">
-      <span class="text-2xl"> আপনার অংশ:{{ result1 }} শতক</span>
+    <div class="result mt-8 p-6 bg-white rounded-xl shadow-md text-center text-lg text-blue-800 font-semibold">
+      <span class="text-2xl"> আপনার অংশ:  {{ result1 }}  শতক</span>
     </div>
     {% endif %}
 
@@ -151,22 +151,23 @@
     <div class="result mt-6 p-6 bg-white rounded-xl shadow-md">
       <h3 class="text-xl font-bold mb-3 text-blue-800">📐 রূপান্তর</h3>
       <p class="text-lg mb-1">
-        <strong>গণ্ডা:</strong> {{ result2.gonda }} &nbsp;|&nbsp;
-        <strong>কড়া:</strong> {{ result2.kora }} &nbsp;|&nbsp;
-        <strong>ক্রান্তি:</strong> {{ result2.kranti }} &nbsp;|&nbsp;
-        <strong>তিল:</strong> {{ result2.til }} &nbsp;|&nbsp;
-        <strong>অতিরিক্ত:</strong> {{ result2.extra_sqft }} বর্গফুট
+        <strong>{{ result2.gonda }}</strong> গণ্ডা &nbsp;|&nbsp;
+        <strong>{{ result2.kora }}</strong> কড়া &nbsp;|&nbsp;
+        <strong>{{ result2.kranti }}</strong> ক্রান্তি &nbsp;|&nbsp;
+        <strong>{{ result2.til }}</strong> তিল &nbsp;|&nbsp;
+        <strong>{{ result2.extra_sqft }}</strong> বর্গফুট
       </p>
      
-      <p class="text-lg font-semibold mt-2">
+      <p class="text-2xl font-semibold mt-2">
         মোট: {{ result2.total_sqft }} স্কয়ারফুট
       </p>
+
     </div>
   {% endif %}
 
 {% if history and history|length > 0 %}
 <section class="mt-10 bg-white p-6 rounded-xl shadow-md">
-  <h2 class="text-2xl font-bold mb-4 text-center text-blue-700">ইতিহাস</h2>
+  <h2 class="text-2xl font-bold mb-4 text-center text-blue-800">ইতিহাস</h2>
   <table class="w-full text-left border-collapse">
     <thead>
       <tr class="bg-blue-100">
